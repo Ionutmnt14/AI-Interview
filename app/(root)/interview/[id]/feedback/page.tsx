@@ -18,7 +18,7 @@ const page = async ({ params }: RouteParams) => {
   if (!interview) redirect("/");
   const feedback = await getFeedbackByInterviewsId({
     interviewId: id,
-    userId: user?.id!,
+    userId: user?.id!.toLowerCase() ?? "default",
   });
 
   console.log(feedback);
@@ -34,7 +34,6 @@ const page = async ({ params }: RouteParams) => {
 
       <div className="flex flex-row justify-center ">
         <div className="flex flex-row gap-5">
-          {/* Overall Impression */}
           <div className="flex flex-row gap-2 items-center">
             <Image src="/star.svg" width={22} height={22} alt="star" />
             <p>
@@ -46,7 +45,6 @@ const page = async ({ params }: RouteParams) => {
             </p>
           </div>
 
-          {/* Date */}
           <div className="flex flex-row gap-2">
             <Image src="/calendar.svg" width={22} height={22} alt="calendar" />
             <p>
@@ -62,7 +60,6 @@ const page = async ({ params }: RouteParams) => {
 
       <p>{feedback?.finalAssessment}</p>
 
-      {/* Interview Breakdown */}
       <div className="flex flex-col gap-4">
         <h2>Breakdown of the Interview:</h2>
         {feedback?.categoryScores?.map((category, index) => (

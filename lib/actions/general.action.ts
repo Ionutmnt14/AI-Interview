@@ -125,3 +125,27 @@ export async function getFeedbackByInterviewsId(
     ...feedbackDoc.data(),
   } as Feedback;
 }
+
+export async function deleteInterviewById(
+  id: string
+): Promise<{ success: boolean }> {
+  try {
+    await db.collection("interviews").doc(id).delete();
+
+    const feedbackQuery = await db
+      .collection("feedback")
+      .where("interviewId", "==", id)
+      .get();
+
+    const batch = db.batch();
+    feedbackQuery.docs.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    await batch.commit();
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting interview and feedback:", error);
+    return { success: false };
+  }
+}

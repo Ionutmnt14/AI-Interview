@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getRandomInterviewCover } from "@/lib/utils";
 import DisplayTechIcons from "./DisplayTechIcons";
 import { getFeedbackByInterviewsId } from "@/lib/actions/general.action";
+import DeleteButton from "./DeleteInterview";
 
 const InterviewCard = async ({
   id,
@@ -60,13 +61,18 @@ const InterviewCard = async ({
         </div>
         <div className="flex flex-row justify-between">
           <DisplayTechIcons techStack={techstack} />
-          <Button className="btn-primary">
-            <Link
-              href={feedback ? `/feedback/${id}/feedback` : `/interview/${id}`}
-            >
-              {feedback ? "Check Feedback" : "View Interview"}
-            </Link>
-          </Button>
+          <div className="flex flex-row items-center justify-center">
+            <DeleteButton id={id!} />
+            <Button className="btn-primary">
+              <Link
+                href={
+                  feedback ? `/interview/${id}/feedback` : `/interview/${id}`
+                }
+              >
+                {feedback ? "Check Feedback" : "View Interview"}
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </div>
