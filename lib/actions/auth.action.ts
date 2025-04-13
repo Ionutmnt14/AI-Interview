@@ -27,7 +27,6 @@ export async function signUp(params: SignUpParams) {
   const { uid, name, email, profileURL } = params;
 
   try {
-    // check if user exists in db
     const userRecord = await db.collection("users").doc(uid).get();
     if (userRecord.exists)
       return {
@@ -35,12 +34,10 @@ export async function signUp(params: SignUpParams) {
         message: "User already exists. Please sign in.",
       };
 
-    // save user to db
     await db.collection("users").doc(uid).set({
       name,
       email,
       profileURL,
-      // resumeURL,
     });
 
     return {
@@ -50,7 +47,6 @@ export async function signUp(params: SignUpParams) {
   } catch (error: any) {
     console.error("Error creating user:", error);
 
-    // Handle Firebase specific errors
     if (error.code === "auth/email-already-exists") {
       return {
         success: false,

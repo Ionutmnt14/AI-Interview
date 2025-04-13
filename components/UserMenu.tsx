@@ -21,7 +21,7 @@ const UserMenu = ({ profileURL }: UserMenuProps) => {
       {profileURL && (
         <Image
           src={profileURL}
-          alt="User Profile"
+          alt="user-profile"
           width={40}
           height={40}
           className="rounded-full border-2 border-red-500"
